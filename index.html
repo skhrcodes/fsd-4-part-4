@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🔹</div>
+      <h1>User Dashboard</h1>
+    </div>
+    <div class="top-actions">
+      <button id="themeToggle" class="btn ghost" aria-pressed="false">Toggle Theme</button>
+      <div class="avatar" title="You">SK</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Tabs -->
+    <div class="tabs" role="tablist" aria-label="Dashboard Sections">
+      <button role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview" tabindex="0" class="tab">Overview</button>
+      <button role="tab" aria-selected="false" aria-controls="panel-activity" id="tab-activity" tabindex="-1" class="tab">Activity</button>
+      <button role="tab" aria-selected="false" aria-controls="panel-tasks" id="tab-tasks" tabindex="-1" class="tab">Tasks</button>
+      <button role="tab" aria-selected="false" aria-controls="panel-settings" id="tab-settings" tabindex="-1" class="tab">Settings</button>
+    </div>
+
+    <!-- Panels -->
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="panel" tabindex="0">
+      <div class="grid cards">
+        <div class="card">
+          <div class="card-title">Total Visits</div>
+          <div class="metric">12,845</div>
+          <div class="trend up">+8.2% vs last week</div>
+        </div>
+        <div class="card">
+          <div class="card-title">New Users</div>
+          <div class="metric">432</div>
+          <div class="trend up">+2.1% vs last week</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Conversion</div>
+          <div class="metric">3.9%</div>
+          <div class="trend down">-0.4% vs last week</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Revenue</div>
+          <div class="metric">₹1.28L</div>
+          <div class="trend up">+5.7% vs last week</div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="card">
+          <div class="card-title">Weekly Traffic</div>
+          <div class="chart" aria-label="Simple area chart">
+            <!-- lightweight inline SVG chart -->
+            <svg viewBox="0 0 300 120" preserveAspectRatio="none">
+              <polyline fill="rgba(59,130,246,0.15)" stroke="none"
+                points="0,110 0,75 40,80 80,60 120,65 160,40 200,55 240,30 280,45 300,35 300,110"/>
+              <polyline fill="none" stroke="currentColor" stroke-width="2"
+                points="0,75 40,80 80,60 120,65 160,40 200,55 240,30 280,45 300,35"/>
+            </svg>
+            <div class="chart-x">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Goals Progress</div>
+          <div class="progress-item">
+            <div class="label">
+              <span>Onboarding Completion</span><span>72%</span>
+            </div>
+            <div class="progress"><span style="width:72%"></span></div>
+          </div>
+          <div class="progress-item">
+            <div class="label">
+              <span>Quarterly Target</span><span>54%</span>
+            </div>
+            <div class="progress"><span style="width:54%"></span></div>
+          </div>
+          <div class="progress-item">
+            <div class="label">
+              <span>Support SLAs</span><span>90%</span>
+            </div>
+            <div class="progress"><span style="width:90%"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" class="panel hidden" tabindex="0">
+      <div class="card">
+        <div class="card-title">Recent Activity</div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="activityBody">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-tasks" role="tabpanel" aria-labelledby="tab-tasks" class="panel hidden" tabindex="0">
+      <div class="card">
+        <div class="card-title">My Tasks</div>
+        <form id="taskForm" class="task-form" autocomplete="off">
+          <input id="taskInput" type="text" placeholder="Add a new task..." aria-label="Task name" />
+          <button class="btn" type="submit">Add</button>
+        </form>
+        <ul id="taskList" class="task-list" aria-live="polite">
+          <!-- tasks injected by JS -->
+        </ul>
+        <div class="task-actions">
+          <button id="clearDone" class="btn ghost">Clear Completed</button>
+          <button id="clearAll" class="btn danger">Clear All</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" class="panel hidden" tabindex="0">
+      <div class="card">
+        <div class="card-title">Profile Settings</div>
+        <form id="settingsForm" class="settings-form">
+          <label>
+            Display Name
+            <input type="text" id="displayName" placeholder="Your name" />
+          </label>
+          <label>
+            Email
+            <input type="email" id="email" placeholder="you@example.com" />
+          </label>
+          <label class="switch-row">
+            <span>Email Notifications</span>
+            <input type="checkbox" id="emailOptIn" />
+          </label>
+          <button class="btn" type="submit">Save Changes</button>
+          <p id="settingsMsg" class="msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2025 Your Company</span>
+    <span class="muted">Tabs are keyboard-accessible: use ← → to switch.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
